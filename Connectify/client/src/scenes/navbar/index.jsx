@@ -1,6 +1,5 @@
 import {useState} from 'react';
 import { 
-    Box,
     IconButton,
     InputBase,
     Select,
@@ -18,7 +17,6 @@ import {
     Notifications,
     Help,
     Menu,
-    Close
  } from '@mui/icons-material';
 
  import { useDispatch,useSelector } from 'react-redux';
@@ -68,7 +66,10 @@ const NavPage = () =>{
                 padding="0.2rem 1rem"
                 gap="3rem"
                 >
-                    <InputBase placeholder='Search...'/>
+                    <InputBase 
+                    placeholder='Search...'
+                    
+                    />
                     <IconButton>
                         <Search />
                         </IconButton>
