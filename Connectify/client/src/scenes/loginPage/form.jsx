@@ -9,13 +9,11 @@ import { setLogin } from "../../state";
 import FlexBetween from "../../components/FlexBetween";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { TextField, Typography } from "@mui/material";
-import { Box, useTheme, useMediaQuery, IconButton } from "@mui/material";
+import { Box, useTheme, useMediaQuery, Button } from "@mui/material";
 
 
 
-import InputAdornment from '@mui/material/InputAdornment';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
+
 
 
 
@@ -49,11 +47,12 @@ const initailLoginValues = {
     password: ""
 };
 
+
 const Form = () => {
     const [pageType, setPageType] = useState("register");
-    const [showPassword, setShowPassword] = React.useState(false);
+    // const [showPassword, setShowPassword] = React.useState(false);
 
-    const handleClickShowPassword = () => setShowPassword((show) => !show);
+    // const handleClickShowPassword = () => setShowPassword((show) => !show);
 
 
 
@@ -64,7 +63,56 @@ const Form = () => {
     const isLogin = pageType === "login";
     const isRegister = pageType === "register";
 
-    const handleSubmitForm = async (values, onSubmitProps) => { };
+    const handleSubmitForm = async (values, onSubmitProps) => { 
+        if(isLogin){
+            await login(values, onSubmitProps);
+        }
+        if(isRegister){
+            await register(values, onSubmitProps);
+        }
+    };
+
+    const register = async (values, onSubmitProps) => {
+        // const { firstName, lastName, email, password, location, occupation, picture } = values; 
+        // const formData = new FormData();
+        // formData.append("firstName", firstName); one way is to append all values one by one like this or other way is create a loop
+        const formData = new FormData();
+        for (let key in values) {
+            formData.append(key, values[key]);
+        }
+    
+        formData.append("picturePath", values.picture.name);
+    
+        const response = await fetch("http://localhost:3001/auth/register", {
+            method: "POST",
+            body: formData,
+        });
+        const savedUser = await response.json();
+        onSubmitProps.resetForm();
+        if(savedUser){
+            setPageType("Login");
+        }
+    };
+    
+    const login = async (values, onSubmitProps) => {
+        const response = await fetch("http://localhost:3001/auth/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(values),
+        });
+        const loggedInUser = await response.json();
+        onSubmitProps.resetForm();
+        if (loggedInUser) {
+            dispatch(setLogin({
+                user: loggedInUser,
+                token: loggedInUser.token,
+            }));
+            navigate("/home");
+        }
+    };
+    
 
     return (
         <Formik
@@ -181,6 +229,7 @@ const Form = () => {
                                         )}
                                     </Dropzone>
                                 </Box>
+
                             </>
                         )}
                         <TextField
@@ -198,25 +247,63 @@ const Form = () => {
                         <TextField
                             label="Password"
                             name="password"
-                            type={showPassword ? "text" : "password"}
+                            type="password"
+                            //type={showPassword ? "text" : "password"}
                             value={values.password}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={Boolean(touched.password && errors.password)}
                             helperText={touched.password && errors.password}
-                            InputProps={{
-                                endAdornment: <InputAdornment position="end">
-                                    <IconButton onClick={handleClickShowPassword}>
-                                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                                    </IconButton>
-                                </InputAdornment>
-                            }}
+                            // InputProps={{
+                            //     endAdornment: <InputAdornment position="end">
+                            //         <IconButton onClick={handleClickShowPassword}>
+                            //             {showPassword ? <VisibilityOff /> : <Visibility />}
+                            //         </IconButton>
+                            //     </InputAdornment>
+                            // }}
                             sx={{
                                 gridColumn: "span 2",
                             }
-                        } 
+                            }
                         />
 
+                    </Box>
+
+                    {/* Button Section */}
+                    <Box>
+                        <Button
+                            type="submit"
+                            fullWidth
+                            sx={{
+                                backgroundColor: palette.primary.main,
+                                color: palette.background.alt,
+                                margin: "2rem 0",
+                                padding: "0.8rem 0",
+                                "&:hover": {
+                                    color: palette.primary.main,
+                                }
+                            }}
+                           
+                            >
+                            {isLogin ? "Login" : "Register"}
+                        </Button>
+                        <Typography
+                        onClick={() => {setPageType(isLogin ? "register" : "login")
+                        resetForm()}}
+                        sx={{
+                            color: palette.primary.main,
+                            textDecoration: "underline",
+                            fontSize: "13px",
+                            cursor: "pointer",
+                            width:"20%",
+                            "&:hover": {
+                                color: palette.primary.light,
+                            }
+                        }}
+                        >
+                            {isLogin ? "Don't have an account? Register" : "Already have an account? Login"}
+
+                        </Typography>
                     </Box>
                 </form>
             )}
