@@ -85,12 +85,15 @@ const Form = () => {
     
         const response = await fetch("http://localhost:3001/auth/register", {
             method: "POST",
+            headers: {
+                "Access-Control-Allow-Origin": '*', // this is for cors error
+            },
             body: formData,
         });
         const savedUser = await response.json();
         onSubmitProps.resetForm();
         if(savedUser){
-            setPageType("Login");
+            setPageType("login");
         }
     };
     
