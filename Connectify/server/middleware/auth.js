@@ -1,4 +1,4 @@
-import { json } from "body-parser";
+
 import jwt from "jsonwebtoken";
 
 export const verifyToken = async (req,res,next) => {

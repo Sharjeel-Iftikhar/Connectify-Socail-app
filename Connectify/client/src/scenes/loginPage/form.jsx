@@ -109,8 +109,9 @@ const Form = () => {
         onSubmitProps.resetForm();
         if (loggedInUser) {
             dispatch(setLogin({
-                user: loggedInUser,
                 token: loggedInUser.token,
+                user: loggedInUser.user,
+                
             }));
             navigate("/home");
         }

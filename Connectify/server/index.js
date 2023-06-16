@@ -11,6 +11,7 @@ import dotenv from 'dotenv';
 import Connection from './database/db.js';
 
 import authRoutes from './routes/auth.js';
+import userRoutes from './routes/user.js';
 import {register} from './controllers/auth.js';
 
 dotenv.config();
@@ -49,6 +50,7 @@ app.post("/auth/register", upload.single("picture"),register);
 
 // Routes
 app.use("/auth",authRoutes);
+app.use("/users", userRoutes);
 
 Connection();
 const PORT = 3001;
