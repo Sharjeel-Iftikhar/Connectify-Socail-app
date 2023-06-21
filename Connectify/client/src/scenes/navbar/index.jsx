@@ -105,7 +105,7 @@ const NavPage = () =>{
                      input = {<InputBase />}
                      >
                         <MenuItem value="Sheri">
-                            <Typography>Sheri</Typography>
+                            <Typography>SherRii</Typography>
                         </MenuItem>
                         <MenuItem value="Logout" onClick={() => dispatch(setLogout())}>Logout</MenuItem>
                     </Select>
