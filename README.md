@@ -24,7 +24,7 @@
 
 ## Demo
 - Demo will be Shared Soon..
-- https://github.com/Sharjeel-Iftikhar/Connectify-Socail-app/assets/81877716/c5fdb342-8771-4a2a-a064-10b32c6b0167
+- ![connectify1-min](https://github.com/Sharjeel-Iftikhar/Connectify-Socail-app/assets/81877716/6be7b35f-3604-4cf8-ab16-3343ad4f15c0)
 
 ## Credits
 - Special Thanks to @ed-roh for awesome tutorial
