@@ -40,6 +40,7 @@ const MyPostWidget = ({ picturePath }) => {
     const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
     const mediumMain = palette.neutral.mediumMain;
     const medium = palette.neutral.medium;
+    const navigate = useNavigate();
 
     const handlePost = async () => {
         const formData = new FormData();
@@ -59,7 +60,7 @@ const MyPostWidget = ({ picturePath }) => {
         const data = await response.json();
         dispatch(setPosts({ data }));
         setImage(null);
-        
+        navigate(0);
         setPost("");
         setIsImage(false);
     };

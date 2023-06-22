@@ -21,7 +21,9 @@ const Friend = ({friendId,name,subtitle,userPicturePath}) => {
   const main = palette.neutral.main;
   const medium = palette.neutral.medium;
 
+   
   const isFriend = friends.find((friend) => friend._id === friendId);
+  // const isFriend = false;
 
   const patchFriend = async () => {
     const response = await fetch(`http://localhost:3001/users/${_id}/${friendId}`, {
@@ -30,6 +32,7 @@ const Friend = ({friendId,name,subtitle,userPicturePath}) => {
         "Content-Type": "application/json"},
     });
     const data = await response.json();
+    console.log("Friends Data ", data);
     dispatch(setFriends({ friends: data }));
   };
   return (
@@ -43,11 +46,15 @@ const Friend = ({friendId,name,subtitle,userPicturePath}) => {
             }}  
             >
                 <Typography
-                variant="h5"
+                varient="h5"
                 color={main}
-                fontWeight="bold"
-                sx={{ color: palette.primary.light,
-                    cursor: "pointer" }}
+                fontWeight="500"
+                sx={{
+                  "&:hover": {
+                    color: palette.primary.light,
+                    cursor: "pointer",
+                  },
+                }}
                 >
                     {name}
                 </Typography>

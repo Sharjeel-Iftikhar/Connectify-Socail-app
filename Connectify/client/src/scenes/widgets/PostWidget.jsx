@@ -53,7 +53,8 @@ const PostWidget = ({
             body: JSON.stringify({ userId: loggedInUserId }),
         });
         const updatedPost = await response.json();
-        dispatch(addPost({ post: updatedPost }));
+        console.log("updatedPost", updatedPost);
+        dispatch(addPost({ post : updatedPost }));
     };
 
     return (

@@ -7,6 +7,8 @@ const PostsWidgets = ({ userId, isProfile = false }) => {
     const dispatch = useDispatch();
     const token = useSelector((state) => state.token);
     const posts = useSelector((state) => state.posts);
+    
+    
 
     const getPosts = async () => {
         const response = await fetch(`http://localhost:3001/posts`, {
@@ -14,11 +16,12 @@ const PostsWidgets = ({ userId, isProfile = false }) => {
             headers: { Authorization: `Bearer ${token}` },
         });
         const data = await response.json();
-        dispatch(setPosts({ posts: data }));
+        console.log("Data to send",data);
+        dispatch(setPosts({posts:data}));
         console.log("In get Post");
-        const ok = Array.isArray(posts.posts);
-        console.log("Checking",ok);
-        console.log("Posts",posts.posts);
+        
+        console.log("posts",posts);
+       
     };
 
     const getUserPosts = async () => {
@@ -27,7 +30,7 @@ const PostsWidgets = ({ userId, isProfile = false }) => {
             headers: { Authorization: `Bearer ${token}` },
         });
         const data = await response.json();
-        dispatch(setPosts({ posts: data }));
+        dispatch(setPosts(data ));
     };
 
     useEffect(() => {
@@ -40,7 +43,7 @@ const PostsWidgets = ({ userId, isProfile = false }) => {
 
     return (
         <>
-            {posts.posts.map(
+            {posts.map(
                 ({
                     _id,
                     userId,
