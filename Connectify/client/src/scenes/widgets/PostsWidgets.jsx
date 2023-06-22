@@ -30,7 +30,7 @@ const PostsWidgets = ({ userId, isProfile = false }) => {
             headers: { Authorization: `Bearer ${token}` },
         });
         const data = await response.json();
-        dispatch(setPosts(data ));
+        dispatch(setPosts({posts:data}));
     };
 
     useEffect(() => {
